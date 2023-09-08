@@ -1,0 +1,40 @@
+{% extends 'home.html' %}
+{% load static %}
+  {% block body %}  
+  <body class="hold-transition layout-top-nav">
+      <div class="wrapper">
+         {% include 'header.html' %}
+         
+         <div class="content-wrapper">
+            {% block content %}
+
+            {% endblock content %}
+         </div>
+       
+      </div>
+    
+      <aside class="control-sidebar control-sidebar-dark">
+         <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+
+      {% include 'footer.html' %}
+
+  
+      <script src="{% static 'lib/adminLite/plugins/jquery/jquery.min.js' %}"></script>
+      <!-- Bootstrap 4 -->
+      <script src="{% static 'lib/adminLite/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <!-- AdminLTE App -->
+      <script src="{% static 'lib/adminLite/dist/js/adminlte.min.js' %}"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="{% static 'lib/adminLite/dist/js/demo.js' %}"></script>
+      <script src="{% static 'fontawesomefree/js/fontawesome.js' %}"></script>
+      <script src="{% static 'fontawesomefree/js/solid.js' %}"></script>
+      <script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
+      {% block javascript %}
+         
+      {% endblock javascript %}
+         
+   </body>
+
+{% endblock body %}

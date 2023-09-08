@@ -1,0 +1,76 @@
+{% extends 'body.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+            <br/>
+        <form id="miFormulario" method="POST" action=".">
+            {% csrf_token %}
+			<input type="hidden" name="action" value="{{ action }}">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                    {{title}}
+                                </h3>
+                            </div>
+                            <div class="card-header">
+
+								{% for hidden in form.hidden_fields %}
+								    {{ hidden }}
+								{% endfor %}
+
+								{% for field in form.visible_fields %}
+									<div class="form-group">
+										<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+											{{ field|add_class:'form-control' }}
+										{% for error in field.errors %}
+										    <span class="help-block" style="color:red">{{ error }}</span>
+										{% endfor %}
+									</div>
+								{% endfor %}
+
+                            </div>
+                            <div class="card-body">
+                            
+                                <button type="submit" id="create_button_form" class="btn btn-primary btn-sm btnTest"> <i class="fa-solid fa-floppy-disk"></i> Guardar </button>
+                            </div>
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+{% endblock content %}
+{% block javascript %}
+ <script src="{% static '/js/functions.js' %}"></script>
+	<script>
+		$("#miFormulario").submit(function (e) {
+			e.preventDefault();
+            let parameter = $(this).serializeArray()
+    
+		$.ajax({
+            type: 'POST',
+            url: "{% url 'create-category' %}",
+            data: parameter,
+			datatype: 'json',
+        }).done(function (data) {
+            if (!data.hasOwnProperty('error')){
+                location.href = '{{ list_url }}'
+				return false;
+			}
+            messageError(data.error)
+            }).fail(function (data) {
+                console.log(data)
+            }).always(function (data) {
+                console.log(data)
+            })
+        })
+		</script>
+{% endblock javascript %}
+
+
